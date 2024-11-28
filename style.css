@@ -1,0 +1,124 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-image: url('page view.jpg'); /* Path to your image */
+  background-size: cover; /* Ensures the image covers the whole page */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Ensures the image doesn't repeat */
+  color: #333;
+  min-height: 100vh; /* Ensures body takes full viewport height */
+  display: flex;
+  flex-direction: column;
+  background-attachment: fixed; /* This keeps the background fixed while scrolling */
+}
+
+/* For Mobile Devices */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll; /* Makes the background scrollable on mobile devices */
+  }
+}
+
+
+
+/* Header Styles */
+header {
+  background:  #97a708;
+  color: #fff;
+  padding: 1em 0;
+  text-align: center;
+}
+
+h1, h2 {
+  margin-bottom: 0.5em;
+}
+
+/* Section Styles with 3D Effect */
+section {
+  padding: 1em;
+  margin: 1em auto;
+  width: 80%;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 3D effect */
+  flex: 1; /* Allows sections to fill the remaining space */
+}
+
+/* Train Animation Section */
+.track {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  overflow: hidden;
+  font-size: 1.5rem;
+}
+
+.train {
+  position: absolute;
+  font-size: 2rem;
+  top: 5px;
+  left: 0;
+  transition: left 0.2s ease-in-out; /* Faster train movement */
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3); /* 3D shadow for train */
+}
+
+.track-emojis {
+  display: block;
+  font-size: 1.8rem;
+  position: absolute;
+  top: 25px;
+  left: 0;
+  width: 100%;
+  white-space: nowrap;
+  background: transparent;
+}
+
+/* Progress Bar Styles */
+.progress-container {
+  width: 100%;
+  height: 30px;
+  background: #ddd;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background: #28a745;
+  transition: width 0.5s ease;
+  border-radius: 15px;
+}
+
+/* Gate Control Styles */
+button {
+  padding: 0.5em 1em;
+  margin: 0.5em;
+  font-size: 1em;
+  background: #97a708;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #b3007a;
+}
+
+/* Footer Styles */
+footer {
+  text-align: center;
+  background-color: #1d0505;
+  color: white;
+  padding: 1em 0;
+  margin-top: auto; /* Ensures footer moves to the bottom if content is less */
+}
+
+footer p {
+  margin: 0;
+}

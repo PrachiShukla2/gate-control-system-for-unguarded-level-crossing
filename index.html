@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gate Control System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Train Gate Control System for unguarded level crossings </h1>
+  </header>
+
+  <!-- Train Information Section -->
+  <section id="train-info">
+    <h2>Train Information</h2>
+    <p><strong>Distance:</strong> <span id="distance">1000</span> cm</p>
+    <p><strong>Speed:</strong> <span id="speed">10</span> m/s</p>
+    <p><strong>Gate Status:</strong> <span id="gate-status">Open</span></p>
+  </section>
+
+  <!-- Train Animation Section -->
+  <section id="train-animation">
+    <h2>Train Movement</h2>
+    <div class="track">
+      <!-- Train Emoji -->
+      <span class="train" id="train">🚂</span>
+      <!-- Track pattern -->
+      <span class="track-emojis" id="track-emojis">||======||======||======||======||======||======||</span>
+    </div>
+  </section>
+
+  <!-- Progress Bar Section -->
+  <section id="progress-bar">
+    <h2>Train Progress</h2>
+    <div class="progress-container">
+      <div class="progress" id="progress"></div>
+    </div>
+  </section>
+
+  <!-- Gate Control Buttons -->
+  <section id="controls">
+    <h2>Manual Gate Control</h2>
+    <button onclick="manualGateControl('Close')">Close Gate</button>
+    <button onclick="manualGateControl('Open')">Open Gate</button>
+  </section>
+
+  <!-- Footer with Copyright Section -->
+  <footer>
+    <p>&copy; 2024 Train Gate Control System for unguarded level crossings. All Rights Reserved. | Owner: Prachi Shukla</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

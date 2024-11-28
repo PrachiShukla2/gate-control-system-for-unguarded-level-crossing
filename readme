@@ -1,0 +1,24 @@
+      🚉 PROEJECT MODEL FOR ENSURING SAFETY MEASURE FOR UNGUARDED LEVEL CROSSING. 🚉
+ This page is intended to be used to understand the hardware model of the unguarded level crossing model.
+ 
+
+               🚉  Working Steps for the hardware model:
+
+1.	IR Sensor 1: Placed 1000 cm from the gate. The timer starts from here. 
+2.	IR Sensor 2: placed 5cm away from sensor 1.  The timer stops here. 
+3.	Train is triggered between these two sensors and final speed is calculated. 
+4.	Time is noted 
+5.	the distance between the sensors is 5 cm 
+6.	speed = d/t 
+7.	When the Arduino will calculate that the train is 500 cm away then will send the    instruction to servomotor and the gate will close as the train arrived 
+8.	IR Sensor 3: placed at the gate to open the gate again. When object will cross the 3rd IR sensor then after delay of 10 sec gate will open. 
+9.	LCD Display: Displays messages and the calculated speed of the train. 
+10.	Servomotors: Controls the opening and closing of the barricades. 
+
+                   🚉 MODEL PICTURED ON THE WEBPAGE:
+
+1. Monitor Train Data: Displays real-time distance and speed of the train.
+2. Progress Bar Visualization: Shows the train's approach to the gate with a dynamic progress bar.
+3. Automatic Gate Control: Closes the gate automatically when the train is less than 500 cm away.
+4. Manual Gate Control: Allows users to manually open or close the gate using buttons.
+5. Gate Reopening: Automatically reopens the gate 10 seconds after the train passes.

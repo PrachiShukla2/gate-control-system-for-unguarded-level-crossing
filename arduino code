@@ -1,0 +1,174 @@
+/*
+#include <LiquidCrystal.h>
+#include <Servo.h>
+
+// Pin configuration for IR Sensors
+const int sensor1Pin = A0; // IR Sensor 1 output
+const int sensor3Pin = A2; // IR Sensor 3 output
+const int safetySensorPin = A1; // IR Sensor near the gate
+
+// Pin configuration for LCD
+const int rs = 7, en = 6, d4 = 5, d5 = 4, d6 = 3, d7 = 2; 
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+// Servo motor pins
+const int servo1Pin = 9;
+const int servo2Pin = 10;
+Servo servo1;
+Servo servo2;
+
+// Buzzer pin
+const int buzzerPin = 8;
+
+const int detectionThreshold = 200; // Threshold for detecting object within 10 cm
+
+// Known distances (in cm)
+const float distanceBetweenSensors = 5.0; // Distance between each sensor
+const float totalDistance = 2 * distanceBetweenSensors; // Total distance (Sensor 1 to Sensor 3)
+const float gateDistance = 1000.0; // Distance of sensors from the gate
+const float criticalDistance = 500.0; // Distance to trigger buzzer for 500 cm
+
+// Variables to store timestamps
+unsigned long time1 = 0;
+unsigned long time3 = 0;
+unsigned long closeGateTimer = 0; // Timer to trigger gate closing
+
+// State machine variables
+enum State { WAIT_FOR_SENSOR1, WAIT_FOR_SENSOR3, CALCULATE_SPEED, CLOSE_GATE, WAIT_FOR_SAFETY_SENSOR, RESET };
+State currentState = WAIT_FOR_SENSOR1;
+
+// Flags
+int prevSensor1State = HIGH; // Initial state (assume not triggered)
+
+void setup() {
+  lcd.begin(16, 2); // Initialize the LCD
+  lcd.print("Initializing");
+  delay(2000);
+  lcd.clear();
+  lcd.print("System Ready!");
+  delay(2000);
+  lcd.clear();
+
+  // Initialize Servo Motors
+  servo1.attach(servo1Pin);
+  servo2.attach(servo2Pin);
+  servo1.write(90); // Open position
+  servo2.write(90); // Open position
+
+  pinMode(buzzerPin, OUTPUT); // Initialize the buzzer pin
+
+  Serial.begin(9600); // Start serial communication for debugging
+  Serial.println("System ready for measurement!");
+}
+
+void loop() {
+  int sensor1Value = analogRead(sensor1Pin);
+  int sensor3Value = analogRead(sensor3Pin);
+  int safetySensorValue = analogRead(safetySensorPin);
+
+  switch (currentState) {
+    case WAIT_FOR_SENSOR1:
+      {
+        int sensor1State = sensor1Value < detectionThreshold ? LOW : HIGH;
+        if (sensor1State == LOW && prevSensor1State == HIGH) {
+          time1 = millis(); // Record the timestamp of sensor 1 trigger
+          Serial.println("Sensor 1 triggered. Measurement started.");
+          currentState = WAIT_FOR_SENSOR3;
+        }
+        prevSensor1State = sensor1State;
+      }
+      break;
+
+    case WAIT_FOR_SENSOR3:
+      if (sensor3Value < detectionThreshold) {
+        time3 = millis(); // Record the timestamp of sensor 3 trigger
+        Serial.println("Sensor 3 triggered. Measurement stopped.");
+        currentState = CALCULATE_SPEED;
+      }
+      break;
+
+    case CALCULATE_SPEED:
+      {
+        float timeElapsed = (time3 - time1) / 1000.0; // Time in seconds
+        float speed = totalDistance / timeElapsed; // Speed in cm/s
+
+        // Display speed on the LCD
+        lcd.clear();
+        lcd.print("Speed = ");
+        lcd.print(speed);
+        lcd.print(" cm/s");
+
+        // Print details on the Serial Monitor
+        Serial.print("Time taken: ");
+        Serial.print(timeElapsed);
+        Serial.println(" s");
+        Serial.print("Final Speed: ");
+        Serial.print(speed);
+        Serial.println(" cm/s");
+
+        // Calculate time to reach critical distance
+        float timeToCriticalDistance = (gateDistance - criticalDistance) / speed;
+        closeGateTimer = millis() + (unsigned long)(timeToCriticalDistance * 1000);
+
+        // Ring buzzer twice when object is 500 cm away
+        for (int i = 0; i < 2; i++) {
+          digitalWrite(buzzerPin, HIGH);
+          delay(500);
+          digitalWrite(buzzerPin, LOW);
+          delay(500);
+        }
+
+        currentState = CLOSE_GATE;
+      }
+      break;
+
+    case CLOSE_GATE:
+      if (millis() >= closeGateTimer) {
+        lcd.clear();
+        lcd.print("Closing Gate...");
+        Serial.println("Closing gate...");
+        servo1.write(0); // Close position
+        servo2.write(0); // Close position
+        currentState = WAIT_FOR_SAFETY_SENSOR;
+      }
+      break;
+
+    case WAIT_FOR_SAFETY_SENSOR:
+      if (safetySensorValue < detectionThreshold) {
+        lcd.clear();
+        lcd.print("Gate Occupied...");
+        Serial.println("Safety sensor triggered. Waiting 10 seconds...");
+        delay(10000); // Keep the gate closed for an additional 10 seconds
+
+        // Open the gate
+        lcd.clear();
+        lcd.print("Opening Gate...");
+        Serial.println("Object passed. Opening gate.");
+        servo1.write(90); // Open position
+        servo2.write(90); // Open position
+
+        // Ring buzzer three times for 3 seconds
+        for (int i = 0; i < 3; i++) {
+          digitalWrite(buzzerPin, HIGH);
+          delay(1000);
+          digitalWrite(buzzerPin, LOW);
+          delay(500);
+        }
+
+        delay(5000); // Wait 5 seconds before resetting
+        currentState = RESET;
+      }
+      break;
+
+    case RESET:
+      lcd.clear();
+      lcd.print("System Ready!");
+      Serial.println("System reset for the next cycle.");
+      time1 = 0;
+      time3 = 0;
+      closeGateTimer = 0;
+      currentState = WAIT_FOR_SENSOR1;
+      break;
+  }
+}
+*/
